@@ -1,0 +1,17 @@
+version: '3.1'
+
+services:
+  db:
+    image: postgres:16
+    restart: always
+    container_name: postgres
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: danfe
+    ports:
+      - "5432:5432"
+    volumes:
+      - meuVolumePostgres:/var/lib/postgresql/data
+volumes:
+  meuVolumePostgres:
