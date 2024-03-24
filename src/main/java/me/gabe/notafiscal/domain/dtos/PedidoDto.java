@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class NotaFiscalDto {
+public class PedidoDto {
   private String cnpjEmitente;
   private String razaoSocialEmitente;
   private String numeroNota;

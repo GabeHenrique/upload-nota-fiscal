@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ItemNotaFiscalDto {
+public class ItemPedidoDto {
   private String codigo;
   private String descricao;
   private String unidadeMedida;

@@ -12,11 +12,11 @@ import java.util.UUID;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "item_nota_fiscal")
-public class ItemNotaFiscal {
+@Table(name = "item_pedido")
+public class ItemPedido {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id_item_nota_fiscal")
+    @Column(name = "id_item_pedido")
     private UUID id;
 
     @Column(name = "descricao", length = 150)
@@ -32,8 +32,8 @@ public class ItemNotaFiscal {
     private BigDecimal quantidade;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_nota_fiscal", foreignKey = @ForeignKey(name = "fk_nota_fiscal_item"))
-    private NotaFiscal notaFiscal;
+    @JoinColumn(name = "id_pedido", foreignKey = @ForeignKey(name = "fk_pedido_item"))
+    private Pedido pedido;
 
     @Column(name = "vl_total", columnDefinition = "numeric(12,2)")
     private BigDecimal valorTotal;
@@ -43,4 +43,8 @@ public class ItemNotaFiscal {
 
     @Column(name = "cod_ean", length = 150)
     private String codigoEan;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_produto", foreignKey = @ForeignKey(name = "fk_produto_item"))
+    private Produto produto;
 }

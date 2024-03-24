@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import me.gabe.notafiscal.domain.enums.TipoEndereco;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -14,11 +15,11 @@ import java.util.UUID;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "nota_fiscal")
-public class NotaFiscal {
+@Table(name = "pedido")
+public class Pedido {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
-  @Column(name = "id_nota_fiscal")
+  @Column(name = "id_pedido")
   private UUID id;
 
   @Column(name = "cnpj_emit", length = 14)
@@ -37,12 +38,8 @@ public class NotaFiscal {
   private String chaveAcesso;
 
   @ManyToOne
-  @JoinColumn(name = "id_emitente", foreignKey = @ForeignKey(name = "fk_emitente_notafiscal"))
-  private Pessoa emitente;
-
-  @ManyToOne
-  @JoinColumn(name = "id_destinatario", foreignKey = @ForeignKey(name = "fk_destinatario_notafiscal"))
-  private Pessoa destinatario;
+  @JoinColumn(name = "id_cliente", foreignKey = @ForeignKey(name = "fk_pedido_cliente"))
+  private Pessoa cliente;
 
   @Column(name = "vl_nota", columnDefinition = "numeric(12,2)")
   private BigDecimal valorTotal;
@@ -56,8 +53,8 @@ public class NotaFiscal {
   @Column(name = "vl_liquido", columnDefinition = "numeric(12,2)")
   private BigDecimal valorLiquido;
 
-  @OneToMany(mappedBy = "notaFiscal", cascade = CascadeType.ALL)
-  private List<ItemNotaFiscal> itens;
+  @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+  private List<ItemPedido> itens;
 
   @Column(name = "string_xml", columnDefinition = "text")
   private String xmlString;
@@ -67,4 +64,12 @@ public class NotaFiscal {
 
   @Column(name = "serie_nota_fiscal", length = 10)
   private String serieNotaFiscal;
+
+  @Column(name = "tipo_endereco", length = 50)
+  @Enumerated(EnumType.STRING)
+  private TipoEndereco tipoEndereco;
+
+  @OneToOne(cascade = CascadeType.ALL, targetEntity = Endereco.class)
+  @JoinColumn(name = "id_endereco", foreignKey = @ForeignKey(name = "fk_pedido_endereco"))
+  private Endereco endereco;
 }

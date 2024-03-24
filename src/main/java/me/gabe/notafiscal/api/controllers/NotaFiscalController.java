@@ -1,24 +1,28 @@
 package me.gabe.notafiscal.api.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-import me.gabe.notafiscal.api.services.NotaFiscalService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import me.gabe.notafiscal.api.services.PedidoService;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/nota-fiscal")
+@RequestMapping("api/nota-fiscal")
 class NotaFiscalController {
 
-  private final NotaFiscalService notaFiscalService;
+  private final PedidoService pedidoService;
 
-  @PostMapping(value = "/salvar", consumes = "multipart/form-data")
+  @Operation(
+      summary = "Importar Nota Fiscal",
+      description = "Permite realizar a importação de uma nota fiscal através de um arquivo XML"
+  )
+  @PostMapping(value = "/importar", consumes = "multipart/form-data")
+  @ResponseStatus(HttpStatus.OK)
   private void salvarNotaFiscal(@RequestParam MultipartFile xmlNota) throws IOException {
-    notaFiscalService.parserToNFe(xmlNota);
+    pedidoService.parserToNFe(xmlNota);
   }
 }
